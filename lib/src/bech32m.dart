@@ -3,42 +3,43 @@ import 'dart:convert';
 import 'exceptions.dart';
 
 /// An instance of the default implementation of the Bech32Codec.
-const Bech32Codec bech32 = Bech32Codec();
+const Bech32mCodec bech32 = Bech32mCodec();
 
-class Bech32Codec extends Codec<Bech32, String> {
-  const Bech32Codec();
-
-  @override
-  Bech32Decoder get decoder => Bech32Decoder();
-  @override
-  Bech32Encoder get encoder => Bech32Encoder();
+class Bech32mCodec extends Codec<Bech32m, String> {
+  const Bech32mCodec();
 
   @override
-  String encode(Bech32 data, [maxLength = Bech32Validations.maxInputLength]) {
-    return Bech32Encoder().convert(data, maxLength);
+  Bech32mDecoder get decoder => Bech32mDecoder();
+  @override
+  Bech32mEncoder get encoder => Bech32mEncoder();
+
+  @override
+  String encode(Bech32m data, [maxLength = Bech32mValidations.maxInputLength]) {
+    return Bech32mEncoder().convert(data, maxLength);
   }
 
   @override
-  Bech32 decode(String data, [maxLength = Bech32Validations.maxInputLength]) {
-    return Bech32Decoder().convert(data, maxLength);
+  Bech32m decode(String data, [maxLength = Bech32mValidations.maxInputLength]) {
+    return Bech32mDecoder().convert(data, maxLength);
   }
 }
 
 // This class converts a Bech32 class instance to a String.
-class Bech32Encoder extends Converter<Bech32, String> with Bech32Validations {
+class Bech32mEncoder extends Converter<Bech32m, String>
+    with Bech32mValidations {
   @override
-  String convert(Bech32 input,
-      [int maxLength = Bech32Validations.maxInputLength]) {
+  String convert(Bech32m input,
+      [int maxLength = Bech32mValidations.maxInputLength]) {
     var hrp = input.hrp;
     var data = input.data;
 
     if (hrp.length +
             data.length +
             separator.length +
-            Bech32Validations.checksumLength >
+            Bech32mValidations.checksumLength >
         maxLength) {
       throw TooLong(
-          hrp.length + data.length + 1 + Bech32Validations.checksumLength);
+          hrp.length + data.length + 1 + Bech32mValidations.checksumLength);
     }
 
     if (hrp.isEmpty) {
@@ -67,10 +68,11 @@ class Bech32Encoder extends Converter<Bech32, String> with Bech32Validations {
 }
 
 // This class converts a String to a Bech32 class instance.
-class Bech32Decoder extends Converter<String, Bech32> with Bech32Validations {
+class Bech32mDecoder extends Converter<String, Bech32m>
+    with Bech32mValidations {
   @override
-  Bech32 convert(String input,
-      [int maxLength = Bech32Validations.maxInputLength]) {
+  Bech32m convert(String input,
+      [int maxLength = Bech32mValidations.maxInputLength]) {
     if (input.length > maxLength) {
       throw TooLong(input.length);
     }
@@ -96,10 +98,10 @@ class Bech32Decoder extends Converter<String, Bech32> with Bech32Validations {
     input = input.toLowerCase();
 
     var hrp = input.substring(0, separatorPosition);
-    var data = input.substring(
-        separatorPosition + 1, input.length - Bech32Validations.checksumLength);
+    var data = input.substring(separatorPosition + 1,
+        input.length - Bech32mValidations.checksumLength);
     var checksum =
-        input.substring(input.length - Bech32Validations.checksumLength);
+        input.substring(input.length - Bech32mValidations.checksumLength);
 
     if (hasOutOfRangeHrpCharacters(hrp)) {
       throw OutOfRangeHrpCharacters(hrp);
@@ -125,12 +127,12 @@ class Bech32Decoder extends Converter<String, Bech32> with Bech32Validations {
       throw InvalidChecksum();
     }
 
-    return Bech32(hrp, dataBytes);
+    return Bech32m(hrp, dataBytes);
   }
 }
 
 /// Generic validations for Bech32 standard.
-class Bech32Validations {
+class Bech32mValidations {
   static const int maxInputLength = 90;
   static const checksumLength = 6;
 
@@ -166,8 +168,8 @@ class Bech32Validations {
 
 /// Bech32 is a dead simple wrapper around a Human Readable Part (HRP) and a
 /// bunch of bytes.
-class Bech32 {
-  Bech32(this.hrp, this.data);
+class Bech32m {
+  Bech32m(this.hrp, this.data);
 
   final String hrp;
   final List<int> data;
@@ -218,6 +220,8 @@ const List<int> generator = [
   0x2a1462b3,
 ];
 
+const int mConstant = 0x2bc830a3;
+
 int _polymod(List<int> values) {
   var chk = 1;
   values.forEach((v) {
@@ -243,12 +247,12 @@ List<int> _hrpExpand(String hrp) {
 }
 
 bool _verifyChecksum(String hrp, List<int> dataIncludingChecksum) {
-  return _polymod(_hrpExpand(hrp) + dataIncludingChecksum) == 1;
+  return _polymod(_hrpExpand(hrp) + dataIncludingChecksum) == mConstant;
 }
 
 List<int> _createChecksum(String hrp, List<int> data) {
-  var values = _hrpExpand(hrp) + data + [0, 0, 0, 0, 0, 0];
-  var polymod = _polymod(values) ^ 1;
+  var values = _hrpExpand(hrp) + data;
+  var polymod = _polymod(values + [0, 0, 0, 0, 0, 0]) ^ mConstant;
 
   var result = <int>[0, 0, 0, 0, 0, 0];
 

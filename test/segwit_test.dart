@@ -1,7 +1,7 @@
 import 'package:hex/hex.dart';
 import 'package:test/test.dart';
 
-import 'package:bech32/bech32.dart';
+import 'package:bech32m/bech32m.dart';
 
 void main() {
   group('segwit with', () {
@@ -50,9 +50,9 @@ void main() {
         // $ echo 0f715baf5d4c2ed329785cef29e562f73488c8a2bb9dbc5700b361d54b9b0554 | xxd -r -p | openssl ripemd160
         // (stdin)= 751e76e8199196d454941c45d1b3a323f1433bd
         var hash160 = '751e76e8199196d454941c45d1b3a323f1433bd6';
-        expect(segwit.encode(Segwit('bc', 0, HEX.decode(hash160))),
+        expect(segwit.encode(Segwit('bc', HEX.decode(hash160))),
             'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4');
-        expect(segwit.encode(Segwit('tb', 0, HEX.decode(hash160))),
+        expect(segwit.encode(Segwit('tb', HEX.decode(hash160))),
             'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx');
       });
 
@@ -64,7 +64,7 @@ void main() {
         // (stdin)= 1863143c14c5166804bd19203356da136c985678cd4d27a1b8c6329604903262
         var hash =
             '1863143c14c5166804bd19203356da136c985678cd4d27a1b8c6329604903262';
-        expect(segwit.encode(Segwit('bc', 0, HEX.decode(hash))),
+        expect(segwit.encode(Segwit('bc', HEX.decode(hash))),
             'bc1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3qccfmv3');
       });
     });
