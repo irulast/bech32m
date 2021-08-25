@@ -94,7 +94,7 @@ class Segwit {
 
   String get scriptPubKey {
     return program
-        .map((c) => c.toRadixString(16).padLeft(0, '0'))
+        .map((c) => c.toRadixString(16).padLeft(2, '0'))
         .toList()
         .join('');
   }
