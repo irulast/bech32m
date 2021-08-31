@@ -1,3 +1,6 @@
+v0.2.2
+* Fixes scriptPubKey padding
+
 v0.2.1
 * Update the convert package (thanks Juneezee)
 
