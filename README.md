@@ -16,7 +16,7 @@ Add it to your `pubspec.yaml`:
 
 ```
 dependencies:
-  bech32m: any
+  bech32mi: any
 ```
 
 ## Licence overview
