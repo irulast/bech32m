@@ -1,8 +1,7 @@
 # Bech32m_i
+This is a fork of [gilnobrega/bech32m](https://github.com/gilnobrega/bech32m) to fix bug with convert.
 
 An implementation of the [BIP350 spec] for Segwit Bech32m address format, adapted to work with the Chia Blockchain and other PoST blockchains.
-
-This is a fork of [gilnobrega/bech32m](https://github.com/gilnobrega/bech32m) to fix bug with convert.
 
 ## Exceptions
 
