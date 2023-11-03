@@ -2,7 +2,7 @@
 
 An implementation of the [BIP350 spec] for Segwit Bech32m address format, adapted to work with the Chia Blockchain and other PoST blockchains.
 
-This is a fork of [@haarts/bech32](https://github.com/haarts/bech32)
+This is a fork of [ gilnobrega/bech32m](https://github.com/gilnobrega/bech32m)
 
 ## Exceptions
 
@@ -16,7 +16,7 @@ Add it to your `pubspec.yaml`:
 
 ```
 dependencies:
-  bech32mi: any
+  bech32m_i: any
 ```
 
 ## Licence overview

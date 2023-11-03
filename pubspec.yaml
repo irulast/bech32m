@@ -1,4 +1,4 @@
-name: bech32mi
+name: bech32m_i
 version: 0.2.2
 description: Library implementing Bitcoins BIP350 (Bech32m encoding) specification in a Flutter friendly fashion.
 repository: https://github.com/irulast/bech32m
