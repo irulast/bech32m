@@ -1,4 +1,4 @@
-import 'package:bech32m/bech32m.dart';
+import 'package:bech32mi/bech32m.dart';
 
 //ignore_for_file: avoid_print
 void main() {

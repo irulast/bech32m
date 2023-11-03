@@ -1,7 +1,7 @@
 import 'package:hex/hex.dart';
 import 'package:test/test.dart';
 
-import 'package:bech32m/bech32m.dart';
+import 'package:bech32mi/bech32m.dart';
 
 void main() {
   group('segwit with', () {
