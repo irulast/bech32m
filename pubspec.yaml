@@ -1,10 +1,10 @@
-name: bech32m
+name: bech32m_i
 version: 0.2.2
 description: Library implementing Bitcoins BIP350 (Bech32m encoding) specification in a Flutter friendly fashion.
-homepage: https://github.com/joaquimguimaraes/bech32m
+repository: https://github.com/irulast/bech32m_i
 
 dependencies:
-  convert: 3.1.1
+  convert: ^3.1.1
   hex: ^0.2.0
 
 dev_dependencies:
