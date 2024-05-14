@@ -59,7 +59,6 @@ class Bech32mEncoder extends Converter<Bech32m, String>
     var checksummed = data + _createChecksum(hrp, data);
 
     if (hasOutOfBoundsChars(checksummed)) {
-      // TODO this could be more informative
       throw OutOfBoundChars('<unknown>');
     }
 
